@@ -1,0 +1,71 @@
+# Sample InSpec inputs file for VMware vSphere 8.0 STIG ESXi scanning
+#
+# Copy this file alongside your scan invocation and adjust values for your environment.
+# The InSpec ESXi profile reads these inputs to validate ESXi configuration against
+# customer-specific values (syslog destinations, NTP servers, etc.).
+
+# =============================================================================
+# Targeting mode
+# =============================================================================
+# Determines which ESXi hosts get scanned within a single InSpec run.
+#
+# Options:
+#   allesxi  - scan every ESXi host registered to the connected vCenter
+#   cluster  - scan all hosts in a specific cluster (requires clusterName below)
+#   host     - scan a single host (requires vmhostName below)
+#
+esximode: 'allesxi'
+
+# Required when esximode='cluster'
+# clusterName: 'Production-Cluster-01'
+
+# Required when esximode='host'
+# vmhostName: 'esxi-01.example.com'
+
+
+# =============================================================================
+# Customer-specific inputs (STIG controls validate against these)
+# =============================================================================
+
+# Syslog destination — STIG requires remote syslog to be configured.
+# Format: 'tcp://hostname:port' or 'udp://hostname:port' or 'ssl://hostname:port'
+syslogServer: 'tcp://syslog.example.com:514'
+
+# NTP servers — STIG requires at least two NTP servers configured.
+# Provide as a list of hostnames or IPs.
+ntpServers:
+  - 'time1.example.com'
+  - 'time2.example.com'
+
+# DNS servers (used by some STIG controls for resolution checks)
+dnsServers:
+  - '192.168.10.10'
+  - '192.168.10.11'
+
+
+# =============================================================================
+# Authentication / session settings
+# =============================================================================
+
+# Maximum allowed concurrent vCenter sessions per user (STIG default: 50)
+# vsphere.maxSessionsCount: 50
+
+# Lockdown mode required state ('normal' / 'strict' / 'disabled')
+# lockdownMode: 'normal'
+
+
+# =============================================================================
+# Operational notes
+# =============================================================================
+# - The profile silently skips hosts where the connected user lacks read
+#   permission on the host. To scan as a non-administrator, ensure the
+#   account has the 'Read-only' role at the host level.
+#
+# - When using esximode='allesxi' against a vCenter with many hosts, expect
+#   the scan to take several minutes per host. Consider running per-cluster
+#   in parallel rather than all-at-once for large environments.
+#
+# - For per-host CKL output (required for accreditation), use the enhanced
+#   InSpec runner script in ../inspec-runner/ rather than running cinc-auditor
+#   directly. The runner generates one CKL per host with proper SAF CLI
+#   conversion.
