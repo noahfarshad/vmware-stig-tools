@@ -4,6 +4,8 @@ Production-tested tooling for VMware vSphere 8.0 STIG compliance scanning and re
 
 This repository collects the tools that emerged from a federal-customer STIG compliance engagement: workarounds for issues with the VMware STIG Tools Appliance, a CKL → CKLB format converter for STIG Viewer 3.x compatibility, and an enhanced InSpec runner script that produces per-host accreditation reports.
 
+**The step after these tools is [STIG Triage](https://github.com/noahfarshad/stig-triage):** it reads the per-host checklists this runner produces, turns the open findings into reviewed fix plans and POA&M entries, and scans vCenter Server, ESXi, the vCenter appliance, Linux and Windows into checklists itself, as one program for Windows or Linux. Its story is [The Fix Plan That Would Have Undone the Hardening](https://essential.coach/stig-triage-open-findings-to-approved-fix-plans/).
+
 ## What's Included
 
 | Component | Purpose | Language |
@@ -75,6 +77,8 @@ Produces the expanded STIG Viewer 3.x native format with proper UUIDs, target me
 For the engagement narrative — the challenges, the discoveries, the lessons learned — see the customer success story:
 
 **[STIG Compliance at Federal Scale: Building VMware Compliance Tooling for vSphere 8.0](https://essential.coach/vmware-stig-compliance-tooling/)**
+
+The sequel, on what to do about the open findings and the scanner that grew out of it: **[The Fix Plan That Would Have Undone the Hardening: STIG Triage, From Open Findings to Approved Fix Plans](https://essential.coach/stig-triage-open-findings-to-approved-fix-plans/)**
 
 ## Compatibility
 
